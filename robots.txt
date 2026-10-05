@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://aymenessouyah.github.io/GlamDressByHBR/sitemap.xml
