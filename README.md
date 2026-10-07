@@ -22,3 +22,16 @@ Le visuel d’accueil est généré par IA, signalé comme hors catalogue. La s�
 
 ## Vérifications réalisées
 Tests automatisés Chromium : recherche, catégories, aucun résultat, fiche et taille, persistance après rechargement, fermeture par Échap, composition du message WhatsApp (ouverture interceptée, aucun message envoyé), lien de secours, menu mobile et absence de débordement horizontal à 320, 390 et 768 px. Vérification visuelle de la capture bureau. Aucun test de réception réelle WhatsApp, Safari, ni audit juridique.
+
+## Page « Styliste » (d’après AI-StyleSense)
+
+Page `styliste-ia.html` : la cliente charge une photo, choisit son occasion, sa saison et son style, et reçoit une **palette de couleurs** et **3 suggestions de tenues**.
+
+### Deux modes
+- **Local (par défaut, sans clé)** : l’analyse est faite **entièrement dans le navigateur** (extraction des couleurs de la photo + estimation indicative du teint + suggestions). **Aucune clé requise, aucun serveur, aucune photo envoyée.** Fonctionne immédiatement.
+- **Enrichi (optionnel, Google Gemini 2.5 Flash)** : si une clé est renseignée dans `assets/styliste-config.js` (constante `GEMINI_API_KEY`, clé commençant par `AIza`), la page bascule sur l’analyse par Gemini. La photo est alors envoyée à Google après le consentement affiché.
+
+### Points de vigilance
+- **Mode local** : l’estimation du teint est indicative ; les suggestions sont des inspirations, non contractuelles.
+- **Mode enrichi** : prévoir la clé (gratuite jusqu’à un certain volume, puis facturée), une clé restreinte à l’API Gemini avec plafond de dépense (sur un site statique la clé est visible dans le code), et la base légale / information des clientes pour l’envoi de la photo à Google.
+- Les suggestions ne remplacent pas l’essayage en boutique.

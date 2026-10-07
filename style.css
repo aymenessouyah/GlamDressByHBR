@@ -14,3 +14,55 @@
 .qr-tile h3{font-size:19px;margin-bottom:16px}
 .qr-tile .button{width:100%;justify-content:center;gap:16px}
 @media(max-width:900px){.qr-panel{padding:55px 5%}.qr-grid{grid-template-columns:1fr;gap:16px}.qr-card{padding:34px 22px}.qr-head{text-align:center;margin-bottom:26px}.qr-head p{margin:0 auto}}
+
+/* ── Page Styliste IA ── */
+.sty{max-width:1200px;margin:auto;padding:60px 5% 90px}
+.sty-head{max-width:64ch;margin-bottom:40px}
+.sty-head h1{font-size:clamp(38px,4.6vw,66px)}
+.sty-head .intro{font-size:14px;max-width:56ch}
+.sty-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.sty-form{background:#fff;border:1px solid var(--line);border-radius:22px;padding:34px}
+.file-drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-height:230px;border:1px dashed #b9bfaf;border-radius:16px;background:#faf9f5;text-align:center;cursor:pointer;padding:18px}
+.file-drop input[type=file]{display:none}
+.file-drop #dropText{font-size:12px;color:var(--muted)}
+.file-drop #preview{max-width:100%;max-height:320px;width:auto;height:auto;object-fit:contain;border-radius:12px}
+.sty-fields{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:22px 0}
+.sty-fields label,.consent{display:block;font-size:11px;margin-bottom:4px}
+.sty-fields select{display:block;width:100%;border:0;border-bottom:1px solid #b9bfaf;background:transparent;padding:11px 0;font-size:12px;color:var(--ink);margin-top:6px}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:11px;color:var(--muted);margin:6px 0 22px;min-width:0}
+.consent input{margin-top:2px;flex:0 0 auto;width:18px;height:18px}
+.consent span{flex:1 1 auto;min-width:0;overflow-wrap:anywhere}
+.sty-form .button{width:100%}
+.sty-form .button:disabled{background:#b9bfaf;border-color:#b9bfaf;cursor:not-allowed}
+.sty-results{background:#fff;border:1px solid var(--line);border-radius:22px;padding:34px}
+.sty-results h2{font-size:30px;margin-bottom:22px}
+.res-block{padding:18px 0;border-top:1px solid var(--line)}
+.res-block:first-child{border-top:0;padding-top:0}
+.res-block h3{font-size:20px;margin-bottom:14px}
+.res-block p{font-size:13px;color:var(--muted);margin:0}
+.swatch{display:inline-block;width:22px;height:22px;border-radius:6px;border:1px solid #0002;vertical-align:middle}
+.palette{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chip{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px}
+.chip .swatch{width:34px;height:34px;flex:0 0 auto}
+.chip b{font-size:12px;font-weight:600;display:block}
+.chip small{font-size:10px;color:var(--muted);display:block;margin-top:2px}
+.sugg{display:flex;flex-direction:column;gap:14px}
+.sugg article{border:1px solid var(--line);border-radius:14px;padding:18px}
+.sugg h4{font-family:Georgia,serif;font-size:19px;font-weight:400;margin:0 0 4px}
+.sugg .occ{display:inline-block;font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:8px}
+.sugg p{font-size:12px;color:var(--muted);margin:8px 0}
+.sugg .tip{font-size:11px;color:#6e765e;font-style:italic}
+.cols{display:flex;gap:6px;margin:12px 0}
+.cols .swatch{width:26px;height:26px}
+@media(max-width:860px){.sty{padding:40px 5% 60px}.sty-grid{grid-template-columns:1fr;gap:28px}.sty-form,.sty-results{padding:26px 20px}}
+@media(max-width:480px){.sty-fields{grid-template-columns:1fr}.palette{grid-template-columns:1fr}}
+
+/* ── Bannière Styliste IA (accueil) ── */
+.sty-teaser{display:flex;align-items:center;gap:18px;flex-wrap:wrap;max-width:1600px;margin:0 auto;padding:20px 5%;background:#252c23;color:#efece1;text-align:left}
+.sty-teaser span{font-size:10px;font-weight:600;letter-spacing:2px;color:#cfd4c0}
+.sty-teaser> :not(span):not(b){font-size:13px}
+.sty-teaser b{margin-left:auto;font-weight:400;font-size:12px;color:#fff;border-bottom:1px solid #8b927a;padding-bottom:4px}
+@media(max-width:720px){.sty-teaser{padding:16px 5%;gap:8px}.sty-teaser b{margin-left:0}}
+
+/* ── Note de mode (Styliste) ── */
+.fine.mode{background:#eef0e6;border-left:2px solid #91987e;padding:9px 12px;margin-top:15px;border-radius:0 8px 8px 0;font-size:11px}
