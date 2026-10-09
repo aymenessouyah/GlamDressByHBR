@@ -66,3 +66,63 @@
 
 /* ── Note de mode (Styliste) ── */
 .fine.mode{background:#eef0e6;border-left:2px solid #91987e;padding:9px 12px;margin-top:15px;border-radius:0 8px 8px 0;font-size:11px}
+
+/* ── Bouton WhatsApp flottant ── */
+.wa-float{position:fixed;right:18px;bottom:18px;z-index:60;display:flex;align-items:center;gap:9px;background:#25d366;color:#fff;padding:13px 18px;border-radius:40px;box-shadow:0 12px 26px -10px rgba(0,0,0,.45);font-size:12px;font-weight:600;letter-spacing:.3px;transition:transform .15s}
+.wa-float:hover{transform:translateY(-2px)}
+.wa-float svg{width:22px;height:22px;fill:#fff}
+@media(max-width:520px){.wa-float{padding:15px}.wa-float span{display:none}}
+
+/* ── Section « À la boutique » (accueil) ── */
+.res{padding-top:0}
+.res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.res-card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;padding:24px 20px;background:#fff;transition:box-shadow .2s,transform .2s}
+.res-card:hover{box-shadow:0 18px 40px -28px rgba(0,0,0,.4);transform:translateY(-3px)}
+.res-idx{font:italic 30px Georgia;color:#a99e80}
+.res-card h3{font-size:20px;margin:14px 0 10px}
+.res-card p{font-size:12px;color:var(--muted);flex:1}
+.res-go{margin-top:18px;font-size:11px;border-bottom:1px solid #858976;padding-bottom:4px;align-self:flex-start}
+@media(max-width:900px){.res-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.res-grid{grid-template-columns:1fr}}
+
+/* ── Pages internes (tailles / nous trouver / blog) ── */
+.page{max-width:1200px;margin:auto;padding:50px 5% 80px}
+.page-head{max-width:64ch;margin-bottom:40px}
+.page-head h1{font-size:clamp(38px,4.6vw,64px)}
+.page-head .intro{font-size:14px;max-width:56ch;color:var(--muted)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:32px}
+.panel h2{font-size:26px;margin-bottom:16px}
+.page .muted{color:var(--muted);font-size:13px}
+.size-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.size-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+.size-table th,.size-table td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line)}
+.size-table th{font-size:11px;letter-spacing:.5px;color:var(--muted);font-weight:600}
+.size-table td:first-child{font-weight:600}
+.measure-list{margin:8px 0 0;padding-left:20px;font-size:13px;color:var(--muted)}
+.measure-list li{margin-bottom:12px}
+.measure-list strong{color:var(--ink)}
+.page-cta{margin-top:44px;background:var(--olive);color:#fff;border-radius:22px;padding:40px;text-align:center}
+.page-cta h2{color:#fff;font-size:30px}
+.page-cta p{color:#dfe3d4;max-width:46ch;margin:0 auto 24px;font-size:13px}
+.page-cta .button{background:#fff;color:var(--olive);border-color:#fff}
+.page-cta .button:hover{background:#f0f0e6}
+@media(max-width:860px){.size-grid{grid-template-columns:1fr}}
+
+/* ── Nous trouver ── */
+.find-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.map-wrap{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:#fff}
+.map-wrap iframe{display:block;width:100%;height:360px;border:0}
+.find-addr{display:block;font-style:normal;font-size:15px;margin:8px 0}
+.find-addr a{border-bottom:1px solid #858976;padding-bottom:2px}
+.hours{font-size:14px;color:var(--muted)}
+.find-grid .panel h2{margin-top:26px}
+.find-grid .panel h2:first-child{margin-top:0}
+@media(max-width:860px){.find-grid{grid-template-columns:1fr}.map-wrap iframe{height:280px}}
+
+/* ── Blog ─ */
+.post{background:#fff;border:1px solid var(--line);border-radius:20px;padding:34px;margin-bottom:22px}
+.post h2{font-size:27px;margin-bottom:16px}
+.post p{font-size:14px;color:var(--ink);line-height:1.7}
+.post-list{margin:8px 0 0;padding-left:20px;font-size:14px;color:var(--ink);line-height:1.65}
+.post-list li{margin-bottom:12px}
+@media(max-width:520px){.post{padding:24px 18px}.page{padding:36px 5% 60px}.page-cta{padding:30px 20px}}
