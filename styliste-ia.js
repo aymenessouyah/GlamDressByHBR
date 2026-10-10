@@ -23,7 +23,7 @@
 
   if (modeNote) modeNote.textContent = useGemini
     ? "Mode enrichi (Google Gemini) : la photo est analysée par Google après votre consentement."
-    : "Mode local : l’analyse se fait dans votre navigateur, aucune photo n’est envoyée. Ajoutez une clé Gemini dans assets/styliste-config.js pour le mode enrichi.";
+    : "Mode local : l’analyse se fait entièrement dans votre navigateur, aucune photo n’est envoyée."
 
   if (photo) {
     photo.addEventListener("change", () => {
@@ -97,6 +97,22 @@
     return { warmth, hex: rgbToHex(Math.round(r), Math.round(g), Math.round(b)) };
   }
 
+  function nameColorHex(hex) { const rgb = hexToRgb(hex); return nameColor(rgb[0], rgb[1], rgb[2]); }
+  function accessoryFor(cols, und) {
+    const metal = und.warmth === "froid" ? "argent" : (und.warmth === "chaud" ? "or" : "doré ou perle");
+    const echo = (cols && cols[1]) ? nameColorHex(cols[1]) : "une teinte de votre palette";
+    return "Bijoux " + metal + ", une pochette qui fait écho à " + echo + " et des chaussures dans un ton neutre pour allonger la silhouette.";
+  }
+  function atelierNote(prefs, palette, und) {
+    const occ = (prefs.occasion || "votre occasion").toLowerCase();
+    const baseName = (palette[0] && palette[0].name) || "votre teinte dominante";
+    const w = { chaud: "réchauffent et illuminent votre regard", froid: "subliment la fraîcheur de votre éclat", neutre: "complètent élégamment votre silhouette" }[und.warmth] || "complètent élégamment votre silhouette";
+    return "Selon l’œil de l’atelier, votre carnation paraît plutôt " + und.warmth + ". Pour " + occ + ", les teintes qui " + w + " s'accordent à votre dominante " + baseName.toLowerCase() + ". Voici une première direction, à affiner ensemble en boutique.";
+  }
+  function seasonTipText(season) {
+    const T = { "Printemps": "Des matières légères et fluides (soie, mousseline, organza) s'accordent à la saison.", "Été": "Privilégiez des matières respirantes (mousseline, crêpe léger, coton noble).", "Automne": "Des matières plus structurées (crêpe de chine, velours léger) s'accordent à la saison.", "Hiver": "Les matières nobles (velours, satin, faille) subliment la saison." };
+    return T[season] || "L’atelier privilégie des matières nobles et fluides, choisies selon votre occasion.";
+  }
   function buildSuggestions(prefs, palette, und) {
     const occ = prefs.occasion || "Autre occasion";
     const base = (palette[0] && palette[0].hex) || "#b8a176";
@@ -135,7 +151,7 @@
       froid: "Votre carnation semble plutôt froide : les bleus, bordeaux et roses poudrés vous subliment.",
       neutre: "Votre carnation semble polyvalente : n’hésitez pas à mêler teintes chaudes et froides."
     }[und.warmth];
-    return list.map(L => ({ titre: L.t, occasion: occ, description: L.d, conseil, couleurs: L.c }));
+    return list.map(L => ({ titre: L.t, occasion: occ, description: L.d, conseil, couleurs: L.c, accessoire: accessoryFor(L.c, und) }));
   }
 
   function loadImage(file) {
@@ -153,9 +169,11 @@
         const palette = extractPalette(img);
         const und = estimateUndertone(img);
         return {
-          carnation: { description: "Teint " + und.warmth + " (estimation indicative)", hex: und.hex },
+          noteAtelier: atelierNote(prefs, palette, und),
+        carnation: { description: "Teint " + und.warmth + " (estimation indicative)", hex: und.hex },
           palette,
-          suggestions: buildSuggestions(prefs, palette, und)
+          seasonTip: seasonTipText(prefs.season),
+        suggestions: buildSuggestions(prefs, palette, und)
         };
       } finally { URL.revokeObjectURL(url); }
     });
@@ -206,6 +224,9 @@
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   function render(o) {
     let html = "";
+    if (o.noteAtelier) {
+      html += '<div class="res-block res-note"><h3>L’œil de l’atelier</h3><p>' + esc(o.noteAtelier) + "</p></div>";
+    }
     if (o.carnation) {
       html += '<div class="res-block"><h3>Votre carnation</h3><p>' + esc(o.carnation.description) +
         ' <span class="swatch" style="background:' + esc(o.carnation.hex) + '" title="' + esc(o.carnation.hex) + '"></span></p></div>';
@@ -221,13 +242,17 @@
       });
       html += "</div></div>";
     }
+    if (o.seasonTip) {
+      html += '<div class="res-block"><h3>Conseil de saison</h3><p>' + esc(o.seasonTip) + "</p></div>";
+    }
     if (o.suggestions && o.suggestions.length) {
       html += '<div class="res-block"><h3>Vos suggestions de tenues</h3><div class="sugg">';
       o.suggestions.forEach((s) => {
         const cols = (s.couleurs || []).map((h) => '<span class="swatch" style="background:' + esc(h) + '" title="' + esc(h) + '"></span>').join("");
         html += "<article><h4>" + esc(s.titre || "") + "</h4>" + (s.occasion ? '<span class="occ">' + esc(s.occasion) + "</span>" : "") +
           "<p>" + esc(s.description || "") + "</p>" + (cols ? '<div class="cols">' + cols + "</div>" : "") +
-          (s.conseil ? '<p class="tip">' + esc(s.conseil) + "</p>" : "") + "</article>";
+          (s.conseil ? '<p class="tip">' + esc(s.conseil) + "</p>" : "") +
+          (s.accessoire ? '<p class="tip acc">À porter avec — ' + esc(s.accessoire) + "</p>" : "") + "</article>";
       });
       html += "</div></div>";
     }
@@ -242,9 +267,9 @@
       if (!f) { status.textContent = "Merci d’ajouter une photo."; return; }
       const fd = new FormData(form);
       const prefs = { occasion: fd.get("occasion"), season: fd.get("season"), style: fd.get("style") };
-      btn.disabled = true; btn.innerHTML = "Analyse en cours…";
+      btn.disabled = true; btn.innerHTML = "L’atelier analyse…";
       results.hidden = true;
-      status.textContent = useGemini ? "Analyse en cours, cela peut prendre quelques secondes…" : "Analyse locale en cours…";
+      status.textContent = useGemini ? "Analyse en cours, cela peut prendre quelques secondes…" : "L’atelier examine votre photo…";
       try {
         const out = useGemini ? await analyzeWithGemini(f, prefs) : await analyzeLocal(f, prefs);
         render(out);
@@ -252,10 +277,10 @@
         results.hidden = false;
         if (results.scrollIntoView) results.scrollIntoView({ behavior: "smooth", block: "start" });
       } catch (err) {
-        console.error("Styliste :", err);
+        console.error("Œil de l’atelier :", err);
         status.textContent = "L’analyse a rencontré un problème. Réessayez." + (useGemini ? " Vérifiez que la clé API est correcte." : "");
       } finally {
-        btn.disabled = false; btn.innerHTML = "Analyser mon style <span>↗</span>";
+        btn.disabled = false; btn.innerHTML = "Recevoir le regard de l’atelier <span>↗</span>";
       }
     });
   }

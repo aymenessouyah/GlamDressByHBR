@@ -146,3 +146,9 @@ img{-webkit-user-drag:none;-khtml-user-drag:none;user-drag:none}
 .protect-veil .pv-lock{font-size:52px;line-height:1}
 .protect-veil .pv-msg{font-size:20px;letter-spacing:1px}
 .protect-veil .pv-sub{font-size:11px;letter-spacing:1.5px;color:#b9bda9}
+
+/* ── L'Œil de l'Atelier : note + accessoires ── */
+.res-note{border-left:3px solid var(--gold);background:#fbf9f3;border-radius:0 12px 12px 0;padding:18px 20px}
+.res-note h3{font-size:20px;margin-bottom:10px}
+.res-note p{font-size:13px;color:#585d4d;font-style:italic;line-height:1.75;margin:0}
+.tip.acc{font-style:normal;color:#79806d;margin-top:11px;padding-top:11px;border-top:1px dashed var(--line)}
