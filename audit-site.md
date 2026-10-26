@@ -132,8 +132,13 @@ Ce sont les seuls points qui empêchent une visiteuse de passer à l’acte.
 - [x] `INFOS-A-REMPLIR.md` : 16 questions, modèle, specs photo
 - [ ] **Les données elles-mêmes** : horaires, réseaux, prix, conditions, avis, photos
 
-**Étape C — dès que vous fournissez les photos**
-Catalogue réel avec fiches complètes, lookbook, `srcset` WebP, page par modèle (SEO).
+**Étape C — outillage livré ✅, photos à exporter par la boutique**
+- [x] `tools/importer-robe.py` : regroupement par robe, redimensionnement, EXIF supprimés, fiches générées
+- [x] Affichage multi-photos (couverture + vignettes dans la fiche)
+- [x] Boutons de catégorie générés depuis le catalogue
+- [x] `PLAN-ORGANISATION-ROBES.md` : export Instagram, taxonomie, fiche à remplir
+- [ ] **Les photos** : Instagram renvoie 403 aux accès automatisés ; l'export doit être fait par la boutique
+- [ ] `srcset` / WebP, page par modèle (SEO) — une fois le volume connu
 
 **Étape D — plus tard**
 Version arabe (RTL), réservation de créneaux réelle, avis vidéo, PWA hors ligne.

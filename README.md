@@ -103,3 +103,21 @@ Page dédiée à la location (conditions, déroulé, préparation, achat ou loca
 
 ### Toujours non testé
 Rendu visuel réel : aucun navigateur graphique dans l'environnement. À contrôler sur Safari/iOS, Android et au clavier.
+
+---
+
+## Catalogue réel — import des photos
+
+`python3 tools/importer-robe.py assets/robes-source` prépare les photos des robes et génère les fiches de `catalog.js`.
+
+- Organisation : **un sous-dossier par robe** (la référence = nom du dossier) ou nommage à plat `gd-241-1.jpg`, `gd-241-2.jpg`.
+- Traitement : redimensionnement 1600 px, JPEG progressif qualité 82, **suppression des métadonnées EXIF** (dont la géolocalisation), rejet des vignettes < 200 px.
+- Sortie : bloc `CATALOG` prêt à coller, photos déjà regroupées par robe.
+- Affichage : la première photo sert de couverture ; la fiche affiche des vignettes cliquables (`aria-pressed` tenu à jour, navigable au clavier).
+
+**Boutons de catégorie générés** : ajouter une catégorie dans `catalog.js` crée le bouton de filtre correspondant, sans modifier `index.html`.
+
+Voir `PLAN-ORGANISATION-ROBES.md` pour la méthode de récupération des photos (export officiel Instagram), la taxonomie et la fiche à remplir.
+
+### Ce qui n'a pas été fait, et pourquoi
+Instagram répond **403** aux accès automatisés, et l'accès réseau de l'environnement est limité à GitHub/PyPI/npm. Surtout, les photos restent la propriété de la boutique : elles doivent être **exportées par la boutique** (« Télécharger vos informations »), pas aspirées par un tiers. Aucun contournement n'a été tenté.
