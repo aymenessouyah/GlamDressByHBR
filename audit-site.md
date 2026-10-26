@@ -146,3 +146,11 @@ Version arabe (RTL), réservation de créneaux réelle, avis vidéo, PWA hors li
 ---
 
 *Document de travail — les éléments « à fournir » dépendent d’informations que seule la boutique détient. Aucune donnée inventée n’a été ajoutée au site.*
+
+**Étape E — agent Instagram (en cours)**
+- [x] Synchronisation des statistiques via l'API officielle + GitHub Actions quotidien
+- [x] Tableau de bord : vues/portée par robe, évolution des abonnés, tableau triable
+- [x] Schéma des avis avec consentement et modération (`supabase/avis.sql`)
+- [ ] Compte professionnel + app Meta + jeton en secrets (côté boutique)
+- [ ] Formulaire d'avis sur le site, connecté à Supabase
+- [ ] Page privée de modération

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="assets/favicon.svg"><meta name="robots" content="noindex,nofollow"><meta property="og:site_name" content="Glam Dress by HBR"><meta name="theme-color" content="#f8f6f1"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><title>Tableau de bord — Glam Dress by HBR</title><meta name="description" content="Tableau de bord interne : statistiques Instagram agrégées."><link rel="stylesheet" href="style.css"><script src="assets/dashboard.js" defer></script></head>
+<body><a class="skip" href="#main">Aller au contenu</a><header><a class="brand" href="index.html" aria-label="Glam Dress by HBR — accueil"><img src="assets/logo-dark.png" width="210" height="95" alt="Glam Dress by HBR"></a><div class="nav-actions"><a class="button small" href="index.html">← Retour au site</a></div></header>
+
+<main id="main" class="dash">
+  <div class="page-head">
+    <p class="eyebrow">TABLEAU DE BORD · INTERNE</p>
+    <h1>Ce que voit<br><em>Instagram.</em></h1>
+    <p class="intro">Vues, portée et enregistrements de vos publications, relus par robe. Statistiques agrégées, aucune donnée personnelle.</p>
+  </div>
+
+  <div class="dash-banner" id="dashBanner" hidden></div>
+
+  <section class="dash-section">
+    <h2>Vue d’ensemble</h2>
+    <div class="kpis" id="kpis"></div>
+  </section>
+
+  <section class="dash-section">
+    <div class="dash-head">
+      <h2>Par robe</h2>
+      <p>Une publication est rattachée à une robe quand sa légende contient sa référence (<code>GD-241</code>).</p>
+    </div>
+    <div class="dash-scroll" id="byRef"></div>
+  </section>
+
+  <section class="dash-section">
+    <div class="dash-head">
+      <h2>Évolution</h2>
+      <p>Une mesure par synchronisation. Le graphique devient lisible après quelques jours.</p>
+    </div>
+    <div id="history"></div>
+  </section>
+
+  <section class="dash-section">
+    <div class="dash-head">
+      <h2>Publications</h2>
+      <label class="dash-sort">Trier par
+        <select id="sortBy">
+          <option value="views">Vues</option>
+          <option value="reach">Portée</option>
+          <option value="saved">Enregistrements</option>
+          <option value="shares">Partages</option>
+          <option value="likes">J’aime</option>
+          <option value="date">Date</option>
+          <option value="ref">Référence</option>
+        </select>
+      </label>
+    </div>
+    <div class="dash-scroll" id="mediaTable"></div>
+  </section>
+
+  <section class="dash-section dash-note">
+    <h2>À propos de ces chiffres</h2>
+    <ul class="post-list">
+      <li><strong>Vues</strong> : nombre de fois où la publication a été affichée, rediffusions comprises.</li>
+      <li><strong>Portée</strong> : nombre de comptes distincts touchés. C’est la mesure la plus honnête pour comparer deux publications.</li>
+      <li><strong>Enregistrements</strong> : mises de côté. Le meilleur signal d’intérêt sur une robe.</li>
+      <li>L’API Instagram ne fournit <strong>pas</strong> les statistiques des autres comptes ; seuls vos propres médias sont mesurés.</li>
+      <li>Les données des stories ne sont disponibles que <strong>24 h</strong> : elles disparaissent si la synchronisation est trop espacée.</li>
+    </ul>
+    <p class="fine">Cette page est exclue de l’indexation (<code>noindex</code>) et du fichier <code>robots.txt</code>, mais elle reste accessible à qui connaît son adresse. Pour la rendre privée, voir la section « Confidentialité » de <code>AGENT-INSTAGRAM.md</code>.</p>
+  </section>
+</main>
+<footer><div class="footer-main"><img src="assets/logo-light.png" alt="Glam Dress by HBR" width="250" height="113"><p>Vos moments précieux.<br><i>Notre univers d’élégance.</i></p><a href="index.html">Retour au site ↗</a></div><div class="footer-bottom"><span>© <span id="year">2026</span> Glam Dress by HBR</span><div><a href="index.html">Accueil</a><a href="location.html">Location</a><a href="tailles.html">Guide des tailles</a><a href="nous-trouver.html">Nous trouver</a></div></div></footer>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+</body></html>

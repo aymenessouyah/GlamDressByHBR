@@ -1,0 +1,68 @@
+# Synchronisation quotidienne des statistiques Instagram.
+#
+# Le jeton vit dans les SECRETS du dépôt, jamais dans le code :
+#   Settings → Secrets and variables → Actions → New repository secret
+#     IG_ACCESS_TOKEN   (jeton longue durée, ~60 jours)
+#     IG_USER_ID        (identifiant du compte professionnel)
+#   Variables facultatives :
+#     IG_API_HOST       graph.instagram.com (défaut) ou graph.facebook.com
+#
+# Le workflow écrit data/instagram.json + une ligne d'historique,
+# puis commite — ce qui déclenche la mise à jour de GitHub Pages.
+#
+# Il peut aussi être lancé à la main : onglet « Actions » → Run workflow.
+
+name: Instagram — synchronisation des statistiques
+
+on:
+  schedule:
+    # tous les jours à 06:10 UTC (07:10 à Tunis)
+    - cron: "10 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: instagram-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Installer Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Vérifier la présence du jeton
+        env:
+          TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::error::Secret IG_ACCESS_TOKEN absent. Voir AGENT-INSTAGRAM.md."
+            exit 1
+          fi
+
+      - name: Synchroniser
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_API_HOST: ${{ vars.IG_API_HOST }}
+        run: node tools/instagram-sync.mjs
+
+      - name: Publier les données
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/instagram.json data/history.jsonl
+          if git diff --cached --quiet; then
+            echo "Aucun changement."
+          else
+            git commit -m "Statistiques Instagram — $(date -u +%F)"
+            git push
+          fi

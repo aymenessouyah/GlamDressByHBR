@@ -121,3 +121,27 @@ Voir `PLAN-ORGANISATION-ROBES.md` pour la méthode de récupération des photos 
 
 ### Ce qui n'a pas été fait, et pourquoi
 Instagram répond **403** aux accès automatisés, et l'accès réseau de l'environnement est limité à GitHub/PyPI/npm. Surtout, les photos restent la propriété de la boutique : elles doivent être **exportées par la boutique** (« Télécharger vos informations »), pas aspirées par un tiers. Aucun contournement n'a été tenté.
+
+---
+
+## Agent Instagram — statistiques et avis
+
+Voir `AGENT-INSTAGRAM.md` pour la mise en route complète (compte professionnel, app Meta, jeton, secrets GitHub).
+
+### Livré
+- `tools/instagram-sync.mjs` — interroge l'**API officielle** (aucune dépendance), écrit `data/instagram.json` et une ligne d'historique. Modes `--mock` (démo, hors ligne) et `--dry-run` (affichage sans écriture).
+- `.github/workflows/instagram-sync.yml` — synchronisation quotidienne à 06:10 UTC ; le jeton est lu dans les **secrets GitHub**, jamais dans le dépôt.
+- `dashboard.html` + `assets/dashboard.js` — vues et portée **par robe**, évolution des abonnés, tableau triable. `noindex`, exclu du sitemap et du `robots.txt`.
+- `supabase/avis.sql` — schéma des avis : consentement obligatoire, statut forcé à `en_attente`, lecture publique limitée aux avis publiés. **À appliquer**, non exécuté.
+
+### Rattachement d'une publication à une robe
+Une légende contenant `GD-241`, `gd241` ou `#gd-241` rattache la publication à cette robe. Sans référence, la publication est comptée dans « Sans référence ».
+
+### Limites assumées
+- Aucune donnée d'un autre compte : l'API ne le permet pas.
+- Les métriques des stories disparaissent après 24 h — d'où la synchronisation quotidienne.
+- Un commentaire Instagram **n'est pas** un avis publiable : aucun contenu de commentaire n'est repris. La collecte d'avis passe par un formulaire avec consentement explicite et validation manuelle.
+- `data/instagram.json` livré contient un **jeu de démonstration** (`"source": "mock"`), annoncé comme tel en bandeau sur le tableau de bord.
+
+### Vérifications
+Suite jsdom dédiée : bandeau de démonstration, 6 indicateurs, agrégation des vues par robe (2 publications GD-241 → 6 460 vues), regroupement « sans référence », tri par vues / date / enregistrements, historique sur 3 jours avec delta et graphique, état vide, données partielles (aucun `NaN`), absence d'erreur console. YAML du workflow validé. `node --check` sur les scripts.
