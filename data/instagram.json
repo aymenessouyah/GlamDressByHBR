@@ -1,0 +1,99 @@
+{
+  "generated_at": "2026-10-26T08:00:14.119Z",
+  "source": "mock",
+  "account": {
+    "username": "glamdress_by_hbr",
+    "followers": 2480,
+    "media_count": 57,
+    "reach": 21400,
+    "profile_views": 3860,
+    "website_clicks": 412
+  },
+  "media": [
+    {
+      "id": "mock-1",
+      "ref": "GD-241",
+      "type": "FEED",
+      "permalink": "",
+      "timestamp": "2026-10-20T08:00:14.118Z",
+      "excerpt": "Robe ivoire drapée, collection mariage #gd-241",
+      "views": 4820,
+      "reach": 3610,
+      "saved": 214,
+      "shares": 96,
+      "interactions": 680,
+      "likes": 342,
+      "comments": 28
+    },
+    {
+      "id": "mock-2",
+      "ref": "GD-242",
+      "type": "FEED",
+      "permalink": "",
+      "timestamp": "2026-10-14T08:00:14.118Z",
+      "excerpt": "Caftan or, broderie main #gd-242",
+      "views": 3150,
+      "reach": 2405,
+      "saved": 158,
+      "shares": 61,
+      "interactions": 446,
+      "likes": 210,
+      "comments": 17
+    },
+    {
+      "id": "mock-3",
+      "ref": "GD-243",
+      "type": "REELS",
+      "permalink": "",
+      "timestamp": "2026-10-08T08:00:14.118Z",
+      "excerpt": "Essayage en vidéo — la robe en mouvement #gd-243",
+      "views": 12480,
+      "reach": 9920,
+      "saved": 640,
+      "shares": 312,
+      "interactions": 2206,
+      "likes": 1180,
+      "comments": 74
+    },
+    {
+      "id": "mock-4",
+      "ref": null,
+      "type": "REELS",
+      "permalink": "",
+      "timestamp": "2026-10-02T08:00:14.118Z",
+      "excerpt": "Dans l'atelier, avant l'ouverture",
+      "views": 8020,
+      "reach": 6410,
+      "saved": 402,
+      "shares": 188,
+      "interactions": 1507,
+      "likes": 866,
+      "comments": 51
+    },
+    {
+      "id": "mock-5",
+      "ref": "GD-241",
+      "type": "STORY",
+      "permalink": "",
+      "timestamp": "2026-09-26T08:00:14.118Z",
+      "excerpt": "Dernier jour d'essayage #gd-241",
+      "views": 1640,
+      "reach": 1480,
+      "saved": null,
+      "shares": 12,
+      "interactions": 12,
+      "likes": null,
+      "comments": null
+    }
+  ],
+  "totals": {
+    "media": 5,
+    "views": 30110,
+    "reach": 23825,
+    "saved": 1414,
+    "shares": 669,
+    "likes": 2598,
+    "comments": 170,
+    "engagement_rate": 26.3
+  }
+}
