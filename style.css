@@ -152,3 +152,50 @@ img{-webkit-user-drag:none;-khtml-user-drag:none;user-drag:none}
 .res-note h3{font-size:20px;margin-bottom:10px}
 .res-note p{font-size:13px;color:#585d4d;font-style:italic;line-height:1.75;margin:0}
 .tip.acc{font-style:normal;color:#79806d;margin-top:11px;padding-top:11px;border-top:1px dashed var(--line)}
+
+/* ── Filtres avancés du catalogue ── */
+.filters-advanced{display:flex;flex-wrap:wrap;align-items:flex-end;gap:18px;padding:16px 18px;margin:0 0 24px;background:#eeeee6;border:1px solid var(--line);border-radius:14px}
+.adv-field{display:flex;flex-direction:column;gap:7px;font-size:9px;letter-spacing:1.6px;color:#697359;text-transform:uppercase;min-width:155px}
+.adv-field select{border:1px solid #c8c9bc;background:#fff;border-radius:8px;padding:9px 12px;font-size:12px;letter-spacing:0;text-transform:none;color:var(--ink);width:100%}
+.adv-reset{margin-left:auto;text-transform:none;letter-spacing:0}
+@media(max-width:720px){.filters-advanced{gap:12px;padding:14px}.adv-field{flex:1 1 130px;min-width:0}.adv-reset{margin-left:0}}
+
+/* ── Fiche produit : informations factuelles ── */
+.product-facts{display:grid;gap:11px;margin:22px 0;padding:16px 0;border-block:1px solid var(--line)}
+.product-facts>div{display:flex;justify-content:space-between;gap:16px;font-size:12px}
+.product-facts dt{color:var(--muted)}
+.product-facts dd{margin:0;text-align:right}
+
+/* ── Bouton secondaire ── */
+.button.secondary{background:transparent;color:var(--olive);justify-content:center;gap:12px;width:100%;margin-bottom:14px}
+.button.secondary:hover{background:#e8ebe0;color:var(--olive)}
+
+/* ── Calculateur de taille (guide des tailles) ── */
+.calc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:18px 0 12px}
+.calc label{display:block;font-size:11px;color:var(--muted)}
+.calc input{display:block;width:100%;border:0;border-bottom:1px solid #b9bfaf;background:transparent;border-radius:0;padding:10px 0;font-size:14px;color:var(--ink);margin-top:6px}
+.calc-actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:18px}
+.calc-out{margin-top:20px;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.calc-out:empty{display:none}
+.calc-out h3{font-size:20px;margin-bottom:8px}
+.calc-out p{font-size:12px;color:var(--muted);margin:0}
+.calc-out .size-badge{display:inline-flex;align-items:center;justify-content:center;min-width:66px;padding:8px 16px;border-radius:40px;background:var(--olive);color:#fff;font-size:22px;font-family:Georgia,serif;margin-bottom:12px}
+.calc-out .calc-link{display:inline-block;margin-top:12px;font-size:12px;border-bottom:1px solid #858976}
+@media(max-width:600px){.calc{grid-template-columns:1fr;gap:12px}}
+
+/* ── Pages articles ── */
+.breadcrumb{font-size:11px;color:var(--muted);margin-bottom:26px}
+.breadcrumb a{text-decoration:underline}
+.post-meta{font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:#7c8471;margin-bottom:18px}
+.post-nav{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;margin-top:10px;font-size:12px}
+.post h3{font-size:22px;margin:26px 0 10px}
+.post-tip{margin-top:24px;padding:16px 18px;border-left:2px solid var(--gold);background:#fbf9f3;font-size:12px;color:#585d4d;border-radius:0 10px 10px 0}
+
+/* ── Page 404 ── */
+.nf{max-width:760px;margin:auto;padding:70px 5% 90px;text-align:center}
+.nf .nf-code{font:italic 92px/1 Georgia,serif;color:#b9bfae;margin:0 0 6px}
+.nf h1{font-size:clamp(30px,4vw,46px)}
+.nf p{color:var(--muted);font-size:14px;max-width:46ch;margin:0 auto 30px}
+.nf-actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.nf-links{display:flex;flex-wrap:wrap;gap:22px;justify-content:center;margin-top:40px;border-top:1px solid var(--line);padding-top:26px;font-size:12px}
+.nf-links a{text-decoration:underline}

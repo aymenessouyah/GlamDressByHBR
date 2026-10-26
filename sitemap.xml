@@ -1,1 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://aymenessouyah.github.io/GlamDressByHBR/</loc></url></urlset>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://aymenessouyah.github.io/GlamDressByHBR/</loc><priority>1.0</priority></url>
+  <url><loc>https://aymenessouyah.github.io/GlamDressByHBR/tailles.html</loc><priority>0.8</priority></url>
+  <url><loc>https://aymenessouyah.github.io/GlamDressByHBR/nous-trouver.html</loc><priority>0.8</priority></url>
+  <url><loc>https://aymenessouyah.github.io/GlamDressByHBR/blog.html</loc><priority>0.8</priority></url>
+  <url><loc>https://aymenessouyah.github.io/GlamDressByHBR/conseil-robe-mariee.html</loc><priority>0.7</priority></url>
+  <url><loc>https://aymenessouyah.github.io/GlamDressByHBR/conseil-robe-soiree.html</loc><priority>0.7</priority></url>
+  <url><loc>https://aymenessouyah.github.io/GlamDressByHBR/conseil-achat-location.html</loc><priority>0.7</priority></url>
+  <url><loc>https://aymenessouyah.github.io/GlamDressByHBR/conseil-entretien-robe.html</loc><priority>0.6</priority></url>
+</urlset>
