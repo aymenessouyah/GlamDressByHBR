@@ -1,0 +1,23 @@
+{
+  "name": "Glam Dress by HBR — Robes de cérémonie à Tunis",
+  "short_name": "Glam Dress",
+  "description": "Robes de cérémonie à El Menzah 5, Tunis : mariage, fiançailles, soirée et tenues orientales. Sélection d’inspirations, guide des tailles et prise de rendez-vous.",
+  "lang": "fr",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8f6f1",
+  "theme_color": "#f8f6f1",
+  "categories": ["shopping", "lifestyle", "fashion"],
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Prendre rendez-vous", "short_name": "Rendez-vous", "url": "./index.html#contact" },
+    { "name": "Guide des tailles", "short_name": "Tailles", "url": "./tailles.html" },
+    { "name": "Nous trouver", "short_name": "Adresse", "url": "./nous-trouver.html" }
+  ]
+}

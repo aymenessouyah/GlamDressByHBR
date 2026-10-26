@@ -35,3 +35,35 @@ Page `styliste-ia.html` : la cliente charge une photo, choisit son occasion, sa 
 - **Mode local** : l’estimation du teint est indicative ; les suggestions sont des inspirations, non contractuelles.
 - **Mode enrichi** : prévoir la clé (gratuite jusqu’à un certain volume, puis facturée), une clé restreinte à l’API Gemini avec plafond de dépense (sur un site statique la clé est visible dans le code), et la base légale / information des clientes pour l’envoi de la photo à Google.
 - Les suggestions ne remplacent pas l’essayage en boutique.
+
+---
+
+## Étape A — améliorations techniques (livrée)
+
+Aucun contenu inventé n'a été ajouté : les seules informations factuelles du site restent celles fournies par la boutique (adresse, téléphone, horaires « nous consulter », tarifs « sur demande »).
+
+### Nouveaux fichiers
+| Fichier | Rôle |
+|---|---|
+| `catalog.js` | **Source unique du catalogue.** Les fiches ne sont plus dupliquées dans `app.js`. Champs facultatifs `sizes`, `mode`, `priceFrom`, `colorName`, `ref`, `photo` : les remplir active automatiquement les filtres taille / formule / budget et remplace l'illustration par une photo réelle. |
+| `assets/tailles.js` | Calculateur de taille (poitrine / taille / hanches → repère XS–XL, mention honnête si la mesure sort du tableau) + lien WhatsApp prérempli avec les mesures. |
+| `manifest.webmanifest` + `assets/icon-192.png`, `icon-512.png`, `icon-maskable-512.png`, `apple-touch-icon.png` | Site installable sur l'écran d'accueil (Android/iOS), sans service worker : pas de contenu mis en cache, donc pas de site figé après une mise à jour. |
+| `404.html` | Page d'erreur avec retour aux collections, WhatsApp et liens utiles. À activer dans GitHub Pages (`404.html` à la racine suffit). |
+| `conseil-robe-mariee.html`, `conseil-robe-soiree.html`, `conseil-achat-location.html`, `conseil-entretien-robe.html` | Les 4 conseils ont désormais **une URL chacun** (avant : une seule page à ancres, impossible à positionner séparément). `blog.html` devient le sommaire. Chaque article a `BreadcrumbList`, `Article`, un encadré « conseil de l'atelier » et des liens croisés. |
+
+### Modifications
+- **`sitemap.xml`** : passe de 1 à 7 URL (l'accueil, tailles, nous trouver, blog + 4 articles). `styliste-ia.html` en est volontairement exclue car la page est en `noindex`.
+- **`<link rel="canonical">`** sur toutes les pages indexables.
+- **Données structurées** : `ClothingStore` enrichi (`url`, `image`, `logo`, `priceRange`, `currenciesAccepted: TND`, `areaServed`, `hasMap`, `makesOffer`) + `FAQPage` sur l'accueil (les 4 questions de la FAQ) + `ItemList` sur le sommaire + `BreadcrumbList` + `Article` par conseil.
+- **Filtres avancés** (accueil) : couleur, taille, formule, budget. Les listes sont **construites à partir des données réelles** de `catalog.js` ; un filtre sans donnée correspondante reste masqué, donc rien ne casse tant que le catalogue n'est pas rempli.
+- **Partage de sélection** : bouton « Partager ma sélection » (Web Share API sur mobile, sinon copie du lien). Le lien ne contient **aucune donnée personnelle**, uniquement des références courtes et un code de taille (`?sel=I01.2,I03.0`). Sélection limitée à 4 inspirations, avec message explicite (avant : dépassement silencieux possible).
+- **Fiche inspiration** : bloc factuel (tarifs, tailles, formule) au lieu d'une simple phrase ; référence boutique affichée si `ref` est renseigné.
+- **Robustesse** : les dialogues s'ouvrent et se ferment même sur un navigateur dépourvu de l'API `<dialog>` native.
+
+### Tests exécutés (jsdom, sans navigateur graphique)
+Catalogue rendu, recherche, état « aucun résultat », ajout à la sélection et enregistrement de la taille, ouverture de fiche, import d'un lien partagé (`?sel=`) avec restauration des tailles, construction des filtres, calculateur de taille (dans le tableau et hors tableau), réinitialisation, liens et ressources internes, présence de `canonical` et du manifest, validité de tous les blocs JSON-LD, JSON du manifest, XML du sitemap, `node --check` sur tous les scripts. **Aucune erreur console.**
+
+### Non testé / à faire à la main
+- Rendu visuel réel : aucun navigateur graphique dans l'environnement de travail. À vérifier sur **Safari/iOS** (barre d'adresse, `position: sticky`, `<dialog>`), Android et au clavier.
+- `Article` JSON-LD sans `datePublished` : à ajouter quand les dates de publication seront fixées.
+- Toujours en attente de la boutique : horaires, prix, réseaux sociaux, photos réelles, conditions de location.
