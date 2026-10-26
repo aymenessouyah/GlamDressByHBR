@@ -67,3 +67,39 @@ Catalogue rendu, recherche, état « aucun résultat », ajout à la sélection 
 - Rendu visuel réel : aucun navigateur graphique dans l'environnement de travail. À vérifier sur **Safari/iOS** (barre d'adresse, `position: sticky`, `<dialog>`), Android et au clavier.
 - `Article` JSON-LD sans `datePublished` : à ajouter quand les dates de publication seront fixées.
 - Toujours en attente de la boutique : horaires, prix, réseaux sociaux, photos réelles, conditions de location.
+
+---
+
+## Étape B — mécanique prête, données à saisir
+
+L'étape B consistait à publier horaires, réseaux, prix, conditions de location et avis. Ces informations appartiennent à la boutique : **le site ne les invente pas**. Toute la plomberie est donc livrée, prête à recevoir les données.
+
+### Un seul fichier à remplir : `assets/boutique.js`
+Tous les champs sont vides par défaut. `assets/boutique-ui.js` lit ce fichier et n'injecte que ce qui est réellement renseigné : un champ vide ne produit **aucun bloc, aucun texte provisoire, aucune balise vide**. Le site reste donc publiable en l'état.
+
+| Donnée | Effet quand elle est renseignée |
+|---|---|
+| `horaires` (+ `schema`) | Remplace « horaires à confirmer » sur Nous trouver et « nous consulter » sur l'accueil ; ajoute `openingHoursSpecification` au JSON-LD |
+| `fermetures`, `rendezVous` | Lignes de précision sous les horaires |
+| `email` | Adresse cliquable sur Nous trouver + `email` dans le JSON-LD |
+| `reseaux` | Liens dans le pied de page de **toutes** les pages + `sameAs` |
+| `priceRange` | Bandeau du catalogue + page Location + `priceRange` du JSON-LD |
+| `location.*` | Remplit la page Location ligne par ligne (les lignes vides restent masquées) |
+| `avis` | Section témoignages sur l'accueil, avec la mention « recueillis avec l'accord des clientes » |
+| `photos` | Galerie « la boutique » sur l'accueil |
+
+### Nouveau : `location.html`
+Page dédiée à la location (conditions, déroulé, préparation, achat ou location). Elle est utile même sans données : elle explique le déroulé et renvoie vers la boutique, sans jamais annoncer une condition non confirmée. Ajoutée au sitemap (8 URL) et au pied de page de toutes les pages ; liée depuis la 4ᵉ carte de l'accueil et depuis la FAQ.
+
+### Garde-fous vérifiés par les tests
+- La configuration livrée est bien vide (aucun avis, aucun horaire, aucun prix) : c'est vérifié automatiquement, pas seulement écrit dans un commentaire.
+- Les URL sociales sont filtrées : seuls `https://` + domaine `instagram.com` / `facebook.com` / `tiktok.com` passent. Une URL `javascript:` ou un domaine usurpé (`instagram.com.evil.tn`) est rejeté — testé.
+- Le contenu des avis et des légendes est échappé (HTML non interprété) — testé avec `<script>alert(1)</script>`.
+- Les données affichées et les données du JSON-LD viennent de la **même source**, donc aucun écart possible entre ce que voit la cliente et ce que lit Google.
+- Avec la configuration vide : horaires de repli conservés, avis et galerie masqués, JSON-LD inchangé, page Location affichant son message honnête. Avec une configuration remplie : chaque bloc apparaît, et seules les conditions renseignées s'affichent.
+
+### Documentation à remplir
+`INFOS-A-REMPLIR.md` : liste des 16 questions à poser à la boutique, modèle de configuration, spécifications des photos (taille, poids, droits, texte alternatif) et vérifications à faire après saisie.
+
+### Toujours non testé
+Rendu visuel réel : aucun navigateur graphique dans l'environnement. À contrôler sur Safari/iOS, Android et au clavier.
