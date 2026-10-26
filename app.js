@@ -44,8 +44,22 @@ function readSharedSelection(){
   return added;
 }
 
+/* Couverture d'une robe : `photo` (une image) ou `photos` (galerie, la
+   première sert de couverture). Sans photo : illustration générée. */
+function cover(p){
+  if(p.photo)return p.photo;
+  if(Array.isArray(p.photos)&&p.photos.length)return p.photos[0];
+  return null;
+}
+function shots(p){
+  const list=[];
+  if(p.photo)list.push(p.photo);
+  if(Array.isArray(p.photos))p.photos.forEach(x=>{if(typeof x==='string'&&!list.includes(x))list.push(x)});
+  return list;
+}
 function art(p){
-  if(p.photo)return `<img src="${p.photo}" alt="Inspiration : ${p.name}" loading="lazy" width="600" height="800">`;
+  const src=cover(p);
+  if(src)return `<img src="${src}" alt="${p.alt?p.alt:'Robe '+p.name}" loading="lazy" width="600" height="800">`;
   return `<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="g${p.id}"><stop stop-color="${p.color}"/><stop offset=".45" stop-color="${p.color}"/><stop offset=".64" stop-color="#ffffff" stop-opacity=".65"/><stop offset="1" stop-color="${p.color}"/></linearGradient></defs><rect width="300" height="400" fill="${p.bg}"/><path d="M35 400V140a115 115 0 0 1 230 0v260" fill="none" stroke="#ffffff" stroke-opacity=".55"/><ellipse cx="150" cy="358" rx="99" ry="12" fill="#554838" opacity=".12"/><path d="M143 57q7-9 14 0l-2 31h-10z" fill="#b4a897"/><path d="M120 83q30 18 60 0l-8 66q22 83 65 199-87 23-174 0 47-117 65-199z" fill="url(#g${p.id})" stroke="#554b3b" stroke-opacity=".2"/><path d="M128 147q22 11 44 0M145 158q-8 120-39 193M157 158q0 113 37 193M150 164v192" fill="none" stroke="#63533f" stroke-opacity=".2"/>${p.cat==='Orientale'?'<path d="m120 85-35 24-21 113 27 9 29-105m60-41 35 24 21 113-27 9-29-105" fill="'+p.color+'"/><path d="M150 96v257" stroke="#f8e3a7" stroke-width="5"/><path d="M130 143h40" stroke="#f8e3a7" stroke-width="5"/>':''}<text x="150" y="386" text-anchor="middle" font-family="Arial" font-size="7" letter-spacing="2" fill="#655d50">ILLUSTRATION D’INSPIRATION</text></svg>`;
 }
 function priceLabel(p){return p.priceFrom?`À partir de ${p.priceFrom} DT`:'Tarifs sur demande'}
@@ -63,6 +77,30 @@ const BUDGETS=[
   {key:'mid',label:'400 – 700 DT',test:v=>v>400&&v<=700},
   {key:'high',label:'Plus de 700 DT',test:v=>v>700}
 ];
+/* ── Boutons de catégorie ──────────────────────────────────────
+   Construits à partir des catégories réellement présentes dans
+   catalog.js : ajouter une catégorie (ex. « Cérémonie ») suffit,
+   il n'y a plus rien à modifier dans index.html. */
+function buildCategoryButtons(){
+  const box=$('.filters');
+  if(!box)return;
+  const cats=[...new Set(products.map(p=>p.cat).filter(Boolean))];
+  if(!cats.length)return;
+  if(filter!=='Tous'&&!cats.includes(filter))filter='Tous';
+  const labels={'Tous':'Tout découvrir'};
+  box.replaceChildren();
+  ['Tous',...cats].forEach(cat=>{
+    const b=document.createElement('button');
+    b.type='button';
+    b.dataset.filter=cat;
+    b.textContent=labels[cat]||cat;
+    const on=cat===filter;
+    if(on)b.classList.add('active');
+    b.setAttribute('aria-pressed',on);
+    box.appendChild(b);
+  });
+}
+
 function buildFilters(){
   const box=$('#advancedFilters');
   if(!box)return;
@@ -118,7 +156,17 @@ function toggle(id){if(selected.some(x=>x.id===id)){selected=selected.filter(x=>
 function openProduct(id){
   const p=products.find(p=>p.id===id);
   const options=SIZES.map(s=>`<option>${s}</option>`).join('');
-  $('#productContent').innerHTML=`<div class="product-art">${art(p)}</div><p class="eyebrow">${p.cat.toUpperCase()} · ${p.id}${p.ref?' · réf. '+p.ref:''}</p><h2>${p.name}</h2><p>${p.description}</p><p><strong>Illustration temporaire — pas un modèle disponible.</strong> Les photos, tailles, tarifs et modalités d’achat ou de location seront à confirmer en boutique.</p><dl class="product-facts"><div><dt>Tarifs</dt><dd>${priceLabel(p)}</dd></div><div><dt>Tailles</dt><dd>${Array.isArray(p.sizes)&&p.sizes.length?p.sizes.join(' · '):'À préciser en boutique'}</dd></div><div><dt>Formule</dt><dd>${p.mode||'Achat ou location, à confirmer'}</dd></div></dl><label>Taille habituelle (indicative)<select id="size">${options}</select></label><button class="button" id="addProduct">Enregistrer dans ma sélection ↗</button>`;
+  const gallery=shots(p);
+  const thumbs=gallery.length>1?`<div class="shots" role="group" aria-label="Photos de ${p.name}">${gallery.map((src,i)=>`<button type="button" data-shot="${i}" aria-pressed="${i===0}" aria-label="Photo ${i+1} sur ${gallery.length}"><img src="${src}" alt="" loading="lazy"></button>`).join('')}</div>`:'';
+  $('#productContent').innerHTML=`<div class="product-art">${art(p)}</div>${thumbs}<p class="eyebrow">${p.cat.toUpperCase()} · ${p.id}${p.ref?' · réf. '+p.ref:''}</p><h2>${p.name}</h2><p>${p.description}</p><p><strong>Illustration temporaire — pas un modèle disponible.</strong> Les photos, tailles, tarifs et modalités d’achat ou de location seront à confirmer en boutique.</p><dl class="product-facts"><div><dt>Tarifs</dt><dd>${priceLabel(p)}</dd></div><div><dt>Tailles</dt><dd>${Array.isArray(p.sizes)&&p.sizes.length?p.sizes.join(' · '):'À préciser en boutique'}</dd></div><div><dt>Formule</dt><dd>${p.mode||'Achat ou location, à confirmer'}</dd></div></dl><label>Taille habituelle (indicative)<select id="size">${options}</select></label><button class="button" id="addProduct">Enregistrer dans ma sélection ↗</button>`;
+  const main=$('#productContent .product-art img');
+  if(main&&gallery.length>1){
+    $('#productContent .shots').addEventListener('click',e=>{
+      const b=e.target.closest('[data-shot]');if(!b)return;
+      main.src=gallery[Number(b.dataset.shot)];
+      $$('#productContent .shots [data-shot]').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    });
+  }
   $('#size').value=selected.find(x=>x.id===id)?.size||'À préciser';
   $('#addProduct').onclick=()=>{selected=selected.filter(x=>x.id!==id);selected.push({id,size:$('#size').value});persist();closeDialog($('#product'));toast('Inspiration et taille enregistrées.')};
   showDialog($('#product'));
@@ -157,4 +205,4 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#nav').classList
 const now=new Date();const today=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;$('#date').min=today;$('#year').textContent=now.getFullYear();
 $('#booking').addEventListener('submit',e=>{e.preventDefault();const form=e.currentTarget;if(!form.reportValidity())return;const f=new FormData(form);if(!String(f.get('name')).trim()){$('#formStatus').textContent='Merci de préciser votre prénom.';return}if(f.get('date')<today){$('#formStatus').textContent='Veuillez choisir une date à partir d’aujourd’hui.';return}const date=new Date(f.get('date')+'T12:00:00').toLocaleDateString('fr-FR');const selection=selected.length?selected.map(x=>{const p=products.find(p=>p.id===x.id);return `- ${p.id} ${p.name}, taille souhaitée : ${x.size}`}).join('\n'):'Aucune inspiration sélectionnée.';const text=`Bonjour Glam Dress by HBR,\nJe m’appelle ${String(f.get('name')).trim()}. Je souhaite demander un essayage.\nOccasion : ${f.get('occasion')}\nRecherche : ${f.get('service')}\nDate souhaitée : ${date} (à confirmer)\nCréneau : ${f.get('creneau')||'sans préférence'}\n\nMes inspirations (illustrations, pas des modèles du catalogue) :\n${selection}\n\nMes envies : ${String(f.get('message')).trim()||'À discuter ensemble.'}\n\nPouvez-vous me confirmer les disponibilités, les modèles réels et les tarifs en DT ?`;const url='https://wa.me/21654218118?text='+encodeURIComponent(text);window.open(url,'_blank','noopener,noreferrer');$('#formStatus').replaceChildren(document.createTextNode('Envoyez le message dans WhatsApp pour transmettre votre demande. Si rien ne s’ouvre : '));const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.textContent='ouvrir WhatsApp';a.style.textDecoration='underline';$('#formStatus').append(a)});
 
-buildFilters();render();updateSelection();
+buildCategoryButtons();buildFilters();render();updateSelection();

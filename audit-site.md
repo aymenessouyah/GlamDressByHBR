@@ -119,11 +119,26 @@ Ce sont les seuls points qui empêchent une visiteuse de passer à l’acte.
 - [ ] Rendu visuel à valider dans un vrai navigateur (pas de navigateur graphique dans l'environnement)
 - [ ] `datePublished` des articles, à ajouter quand les dates seront fixées
 
-**Étape B — dès que vous fournissez les informations**
-Horaires, Instagram/Facebook, fourchettes de prix, conditions de location, photos de la boutique, avis authentiques.
+**Étape B — mécanique livrée ✅, données à fournir**
+- [x] `assets/boutique.js` : fichier unique de configuration, tout vide par défaut
+- [x] `assets/boutique-ui.js` : n'affiche que les données réellement renseignées
+- [x] Horaires (page Nous trouver + accueil) et `openingHoursSpecification`
+- [x] E-mail de contact
+- [x] Réseaux sociaux dans le pied de page + `sameAs`
+- [x] Fourchette de prix (catalogue, page Location, JSON-LD)
+- [x] Page `location.html` : conditions, déroulé, préparation
+- [x] Section avis authentiques (masquée par défaut, mention de consentement)
+- [x] Galerie photos de la boutique (masquée par défaut)
+- [x] `INFOS-A-REMPLIR.md` : 16 questions, modèle, specs photo
+- [ ] **Les données elles-mêmes** : horaires, réseaux, prix, conditions, avis, photos
 
-**Étape C — dès que vous fournissez les photos**
-Catalogue réel avec fiches complètes, lookbook, `srcset` WebP, page par modèle (SEO).
+**Étape C — outillage livré ✅, photos à exporter par la boutique**
+- [x] `tools/importer-robe.py` : regroupement par robe, redimensionnement, EXIF supprimés, fiches générées
+- [x] Affichage multi-photos (couverture + vignettes dans la fiche)
+- [x] Boutons de catégorie générés depuis le catalogue
+- [x] `PLAN-ORGANISATION-ROBES.md` : export Instagram, taxonomie, fiche à remplir
+- [ ] **Les photos** : Instagram renvoie 403 aux accès automatisés ; l'export doit être fait par la boutique
+- [ ] `srcset` / WebP, page par modèle (SEO) — une fois le volume connu
 
 **Étape D — plus tard**
 Version arabe (RTL), réservation de créneaux réelle, avis vidéo, PWA hors ligne.
