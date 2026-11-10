@@ -1,4 +1,10 @@
-# Synchronisation quotidienne des statistiques Instagram.
+# ⛔ AGENT ARRÊTÉ le 2026-11-10 à la demande du propriétaire.
+# La synchronisation automatique quotidienne est désactivée :
+# le bloc `schedule` a été retiré. Le workflow ne se lance plus
+# tout seul — uniquement à la main via « Run workflow » si besoin.
+# Pour relancer l'automatique, remettre le bloc schedule ci-dessous.
+#
+# Synchronisation des statistiques Instagram (manuelle uniquement).
 #
 # Le jeton vit dans les SECRETS du dépôt, jamais dans le code :
 #   Settings → Secrets and variables → Actions → New repository secret
@@ -10,14 +16,13 @@
 # Le workflow écrit data/instagram.json + une ligne d'historique,
 # puis commite — ce qui déclenche la mise à jour de GitHub Pages.
 #
-# Il peut aussi être lancé à la main : onglet « Actions » → Run workflow.
+# Lancement manuel : onglet « Actions » → Run workflow.
 
 name: Instagram — synchronisation des statistiques
 
 on:
-  schedule:
-    # tous les jours à 06:10 UTC (07:10 à Tunis)
-    - cron: "10 6 * * *"
+  # schedule:  # ⛔ désactivé le 2026-11-10 (agent arrêté)
+  #   - cron: "10 6 * * *"  # anciennement : tous les jours à 06:10 UTC
   workflow_dispatch:
 
 permissions:

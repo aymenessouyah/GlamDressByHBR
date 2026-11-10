@@ -1,5 +1,12 @@
 # L'agent Instagram — ce qu'il fait, ce qu'il ne fait pas
 
+> ⛔ **AGENT ARRÊTÉ le 2026-11-10 à la demande du propriétaire.**
+> La synchronisation automatique quotidienne (`.github/workflows/instagram-sync.yml`)
+> est désactivée : le déclencheur `schedule` a été retiré. Le script
+> `tools/instagram-sync.mjs` et le tableau de bord restent dans le dépôt,
+> mais plus rien ne se lance tout seul. Lancement manuel possible via
+> l'onglet « Actions » → Run workflow si besoin.
+
 Objectif : voir les **vues**, la **portée** et l'intérêt pour chaque robe, puis recueillir des **avis clientes** sans jamais publier un faux témoignage.
 
 ---
